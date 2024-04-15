@@ -1,18 +1,25 @@
+import os.path as op
 import sys
-from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout, QPushButton)
+from PyQt5.QtWidgets import QApplication
+from PyQt5 import uic
 
-class MainWindow (QWidget):
+def res_path (fname):
+    return op.join (op.dirname (__file__), fname)
+
+MainFormUI, MainForm = uic.loadUiType (res_path ('main_form.ui'))
+
+class MainWindow (MainForm):
     def __init__ (self):
-        # Call original Qwidget constructor
         super ().__init__ ()
-        self.setWindowTitle ("GUI example") # Set custom window title
-        grid = QGridLayout ()
-        self.setLayout (grid) # Create grid for widgets placing
-        button_1 = QPushButton ("Button name") # Create button and put it on grid
-        grid.addWidget (button_1, 0, 0)
-        button_1.clicked.connect (self.__button_1_handler) # Connect handler to "clicked" event
-    def __button_1_handler (self): # Create handler for "clicked" event
-        print ("Button pushed")
+        # Create UI instance
+        self.ui = MainFormUI ()
+        self.ui.setupUi (self)
+        # Attach event handlers
+        self.ui.pushButton.clicked.connect (self.__button_handler)
+
+    def __button_handler (self):
+        print (self.ui.lineEdit.text ())
+        self.ui.lineEdit.setText ('')
 
 def main ():
     app = QApplication (sys.argv)
