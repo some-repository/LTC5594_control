@@ -7,6 +7,8 @@ from PyQt6 import uic
 from ctypes import BigEndianStructure, c_uint8
 import usb.core
 
+ep_write_number = 1
+
 def res_path (fname):
     return op.join (op.dirname (__file__), fname)
 
@@ -42,7 +44,12 @@ class LTC5594_control (BigEndianStructure):
         ('CHIPID', c_uint8), # bits [7:6] - CHIPID, bits [5:0] - do not change (LSB should always be set to 1)
     ]
     def __init__ (self):
-        self.CHIPID = 1 # LSB should always be set to 
+        self.CHIPID = 1 # LSB should always be set to 1
+
+read_sequence = bytearray (len (LTC5594_control))
+read_sequence [0] = (1 << 7)
+print (read_sequence)
+
         
 control_structure = LTC5594_control ()
 
@@ -111,10 +118,28 @@ class MainWindow (MainForm):
         #------------------------------------------------------------------------
         #------------------------------------------------------------------------
         dev = usb.core.find (idVendor = 0x1209, idProduct = 0x0001)
-        dev.write (1, control_array)
-        read_buf = bytes (dev.read (0x81, 64))
-        print (read_buf.hex (" ", 1))
-        dev.finalize ()
+        if dev is None:
+            self.ui.console_output.appendPlainText ('ERROR: failed to find device')
+        else:
+            TX_length = len (dev.write (ep_write_number, control_array)) # send package containing registers values
+            if TX_length != len (control_array):
+                self.ui.console_output.appendPlainText ('WARNING: wrong length of transmitted package at the write stage, TX_length = ' + str (TX_length))
+            
+            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64))
+            RX_length = len (read_buf)
+            if RX_length != len (control_array):
+                self.ui.console_output.appendPlainText ('WARNING: wrong length of received package at the write stage, RX_length = ' + str (RX_length))
+            
+            TX_length = len (dev.write (ep_write_number, read_sequence)) # send package containing registers values
+            if TX_length != len (read_sequence):
+                self.ui.console_output.appendPlainText ('WARNING: wrong length of transmitted package at the read stage, TX_length = ' + str (TX_length))
+
+            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64))
+            RX_length = len (read_buf)
+            if RX_length != len (read_sequence):
+                self.ui.console_output.appendPlainText ('WARNING: wrong length of received package at the read stage, RX_length = ' + str (RX_length))
+            
+            dev.finalize ()
 
 def main ():
     app = QApplication (sys.argv)
