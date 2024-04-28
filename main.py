@@ -46,10 +46,8 @@ class LTC5594_control (BigEndianStructure):
     def __init__ (self):
         self.CHIPID = 1 # LSB should always be set to 1
 
-read_sequence = bytearray (len (LTC5594_control))
+read_sequence = bytearray (len (LTC5594_control._fields_))
 read_sequence [0] = (1 << 7)
-print (read_sequence)
-
         
 control_structure = LTC5594_control ()
 
@@ -65,10 +63,10 @@ class MainWindow (MainForm):
     def write_button_handler (self):
         if self.ui.EDEM.isChecked ():
             control_structure.EDEM_EDC_EADJ_EAMP_SRST_SDO |= 0b10000000
-            self.ui.console_output.appendPlainText ('Demodulator enabled')
+            #self.ui.console_output.appendPlainText ('Demodulator enabled')
         else:
             control_structure.EDEM_EDC_EADJ_EAMP_SRST_SDO &= ~0b10000000
-            self.ui.console_output.appendPlainText ('Demodulator disabled')
+            #self.ui.console_output.appendPlainText ('Demodulator disabled')
         #------------------------------------------------------------------------
         if self.ui.EDC.isChecked ():
             control_structure.EDEM_EDC_EADJ_EAMP_SRST_SDO |= 0b01000000
@@ -121,24 +119,32 @@ class MainWindow (MainForm):
         if dev is None:
             self.ui.console_output.appendPlainText ('ERROR: failed to find device')
         else:
-            TX_length = len (dev.write (ep_write_number, control_array)) # send package containing registers values
+            TX_length = dev.write (ep_write_number, control_array) # send package containing registers values
             if TX_length != len (control_array):
                 self.ui.console_output.appendPlainText ('WARNING: wrong length of transmitted package at the write stage, TX_length = ' + str (TX_length))
             
-            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64))
+            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64)) # read response package from MCU (this package is useless)
             RX_length = len (read_buf)
             if RX_length != len (control_array):
                 self.ui.console_output.appendPlainText ('WARNING: wrong length of received package at the write stage, RX_length = ' + str (RX_length))
             
-            TX_length = len (dev.write (ep_write_number, read_sequence)) # send package containing registers values
+            TX_length = dev.write (ep_write_number, read_sequence) # send read sequence
             if TX_length != len (read_sequence):
                 self.ui.console_output.appendPlainText ('WARNING: wrong length of transmitted package at the read stage, TX_length = ' + str (TX_length))
 
-            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64))
+            read_buf = bytes (dev.read (ep_write_number | (1 << 7), 64)) # read response package from MCU to check if values were written to registers correctly
             RX_length = len (read_buf)
             if RX_length != len (read_sequence):
                 self.ui.console_output.appendPlainText ('WARNING: wrong length of received package at the read stage, RX_length = ' + str (RX_length))
             
+            if read_buf [1:] == control_array [1:]:
+                self.ui.console_output.appendPlainText ('SUCCESSFUL write and check')
+            else:
+                self.ui.console_output.appendPlainText ('WARNING: wrong values received during check')
+            
+            #print ('control_array = ' + str (control_array))
+            #print ('read_buf = ' + str (read_buf))
+
             dev.finalize ()
 
 def main ():
