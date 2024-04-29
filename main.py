@@ -109,7 +109,16 @@ class MainWindow (MainForm):
         control_structure.PHA_AMPG_AMPCC_AMPIC &= ~(0b111 << 4)
         control_structure.PHA_AMPG_AMPCC_AMPIC |= ((self.ui.IF_gain.value () - 8) << 4)
         #------------------------------------------------------------------------
-        #print (control_structure.PHA_AMPG_AMPCC_AMPIC)
+        PHA = self.ui.PHA.value ()
+        PHA_0 = PHA & 0b000000001 # LSB of PHA value
+        control_structure.PHA = (PHA >> 1)
+        if PHA_0 == 1:
+            control_structure.PHA_AMPG_AMPCC_AMPIC |= 0b10000000 # set PHA[0] bit
+        else:
+            control_structure.PHA_AMPG_AMPCC_AMPIC &= ~0b10000000 # reset PHA[0] bit  
+        #------------------------------------------------------------------------
+        #print ('PHA_AMPG_AMPCC_AMPIC = ' + bin (control_structure.PHA_AMPG_AMPCC_AMPIC))
+        #print ('PHA = ' + bin (control_structure.PHA))
         #------------------------------------------------------------------------
         #------------------------------------------------------------------------
         control_array = bytes (control_structure)
