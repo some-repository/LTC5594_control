@@ -103,8 +103,6 @@ class MainWindow (MainForm):
             control_structure.EDEM_EDC_EADJ_EAMP_SRST_SDO &= ~0b00000100
             #self.ui.console_output.appendPlainText ('SDO disabled')
         #------------------------------------------------------------------------
-        #print (control_structure.EDEM_EDC_EADJ_EAMP_SRST_SDO)
-        #------------------------------------------------------------------------
         #------------------------------------------------------------------------
         control_structure.PHA_AMPG_AMPCC_AMPIC &= ~(0b111 << 4)
         control_structure.PHA_AMPG_AMPCC_AMPIC |= ((self.ui.IF_gain.value () - 8) << 4)
@@ -117,8 +115,9 @@ class MainWindow (MainForm):
         else:
             control_structure.PHA_AMPG_AMPCC_AMPIC &= ~0b10000000 # reset PHA[0] bit  
         #------------------------------------------------------------------------
-        #print ('PHA_AMPG_AMPCC_AMPIC = ' + bin (control_structure.PHA_AMPG_AMPCC_AMPIC))
-        #print ('PHA = ' + bin (control_structure.PHA))
+        control_structure.LVCM_CF1 = (self.ui.LVCM.value () << 5) | self.ui.CF1.value ()
+        #------------------------------------------------------------------------
+        control_structure.BAND_LF1_CF2 = (self.ui.BAND.value () << 7) | (self.ui.LF1.value () << 5) | self.ui.CF2.value ()
         #------------------------------------------------------------------------
         #------------------------------------------------------------------------
         control_array = bytes (control_structure)

@@ -17,69 +17,20 @@
    <property name="rightMargin">
     <number>0</number>
    </property>
-   <item row="3" column="5">
-    <widget class="QSpinBox" name="DCOQ">
-     <property name="maximum">
-      <number>255</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="5">
-    <widget class="QSpinBox" name="LF">
-     <property name="maximum">
-      <number>3</number>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QSpinBox" name="CF2">
-     <property name="maximum">
-      <number>31</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="3">
-    <widget class="QCheckBox" name="SDO_MODE">
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="EAMP">
      <property name="text">
-      <string>SDO readback</string>
+      <string>Amplifiers</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QCheckBox" name="EDEM">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+   <item row="5" column="4">
+    <widget class="QLabel" name="label_9">
      <property name="text">
-      <string>Demodulator</string>
+      <string>LF1</string>
      </property>
-    </widget>
-   </item>
-   <item row="4" column="5">
-    <widget class="QSpinBox" name="BAND">
-     <property name="maximum">
-      <number>1</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QCheckBox" name="EADJ">
-     <property name="text">
-      <string>Nonlinearity adjust</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="5">
-    <widget class="QPushButton" name="write_button">
-     <property name="text">
-      <string>Write settings</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="3">
-    <widget class="QSpinBox" name="DCOI">
-     <property name="maximum">
-      <number>255</number>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
@@ -90,60 +41,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="5">
-    <widget class="QCheckBox" name="SRST">
-     <property name="text">
-      <string>Reset registers</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QCheckBox" name="EDC">
-     <property name="text">
-      <string>DC offset adjust</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>DC offset I</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QSpinBox" name="IF_gain">
-     <property name="suffix">
-      <string/>
-     </property>
-     <property name="prefix">
-      <string/>
-     </property>
-     <property name="minimum">
-      <number>8</number>
-     </property>
+   <item row="3" column="3">
+    <widget class="QSpinBox" name="DCOI">
      <property name="maximum">
-      <number>15</number>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>IF gain</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QCheckBox" name="EAMP">
-     <property name="text">
-      <string>Amplifiers</string>
+      <number>255</number>
      </property>
     </widget>
    </item>
@@ -154,20 +55,17 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QSpinBox" name="CF1">
-     <property name="maximum">
-      <number>31</number>
+   <item row="2" column="3">
+    <widget class="QCheckBox" name="SDO_MODE">
+     <property name="text">
+      <string>SDO readback</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="4">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>DC offset Q</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   <item row="5" column="5">
+    <widget class="QSpinBox" name="LF1">
+     <property name="maximum">
+      <number>3</number>
      </property>
     </widget>
    </item>
@@ -191,13 +89,39 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="4">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>BAND (set 1 for f &gt; 1046 MHz</string>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="IF_gain">
+     <property name="suffix">
+      <string/>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <property name="prefix">
+      <string/>
+     </property>
+     <property name="minimum">
+      <number>8</number>
+     </property>
+     <property name="maximum">
+      <number>15</number>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="6">
+    <widget class="QPlainTextEdit" name="console_output">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="plainText">
+      <string notr="true"/>
+     </property>
+     <property name="placeholderText">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3">
+    <widget class="QSpinBox" name="CF2">
+     <property name="maximum">
+      <number>31</number>
      </property>
     </widget>
    </item>
@@ -205,6 +129,43 @@
     <widget class="QLabel" name="label_7">
      <property name="text">
       <string>CF1</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>IF gain</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>BAND (set 1 for f &gt; 1046 MHz)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QSpinBox" name="LVCM">
+     <property name="maximum">
+      <number>7</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="4">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>DC offset Q</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -221,26 +182,116 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="4">
-    <widget class="QLabel" name="label_9">
+   <item row="3" column="5">
+    <widget class="QSpinBox" name="DCOQ">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="EADJ">
      <property name="text">
-      <string>LF</string>
+      <string>Nonlinearity adjust</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>IP3CC</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="6">
-    <widget class="QPlainTextEdit" name="console_output">
-     <property name="readOnly">
+   <item row="5" column="1">
+    <widget class="QSpinBox" name="CF1">
+     <property name="maximum">
+      <number>31</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>DC offset I</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <widget class="QSpinBox" name="BAND">
+     <property name="maximum">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="4">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>IP3IC</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QCheckBox" name="SRST">
+     <property name="text">
+      <string>Reset registers</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>LVCM</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QCheckBox" name="EDC">
+     <property name="text">
+      <string>DC offset adjust</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QCheckBox" name="EDEM">
+     <property name="enabled">
       <bool>true</bool>
      </property>
-     <property name="plainText">
-      <string notr="true"/>
+     <property name="text">
+      <string>Demodulator</string>
      </property>
-     <property name="placeholderText">
-      <string notr="true"/>
+    </widget>
+   </item>
+   <item row="7" column="5">
+    <widget class="QPushButton" name="write_button">
+     <property name="text">
+      <string>Write settings</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="3">
+    <widget class="QSpinBox" name="IP3CC">
+     <property name="maximum">
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="5">
+    <widget class="QSpinBox" name="IP3IC">
+     <property name="maximum">
+      <number>7</number>
      </property>
     </widget>
    </item>
